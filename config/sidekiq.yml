@@ -1,0 +1,6 @@
+:scheduler:
+  :schedule:
+    user:
+      cron: "0 * * * *"
+      class: "CreateEmployeeWorker"
+      queue: "default"

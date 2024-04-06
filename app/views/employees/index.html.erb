@@ -1,0 +1,48 @@
+<div class="container mt-4">
+  <h1 class="mb-4">Employees</h1>
+  <% if notice %>
+    <div class="alert alert-success" role="alert">
+      <%= notice %>
+    </div>
+  <% end %>
+  <div class='row'>
+    <div class='col-lg-6 mx-auto'>
+      <%= link_to 'New Employee', new_employee_path, class: 'btn btn-primary mb-4' %>
+    </div>
+    <div class='col-lg-6 mx-auto'>
+      <div class="d-flex justify-content-end">
+        <h5>Select Department:</h5>
+        <%= form_with(url: employees_path, method: :get) do %>
+          <%= select_tag :department, options_for_select(Employee.pluck(:department).uniq, params[:department]), include_blank: true, onchange: "this.form.submit();", class:'form-select ms-2' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Department</th>
+        <th scope="col">Salary</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @employees.each do |employee| %>
+        <tr>
+          <td><%= employee.first_name %></td>
+          <td><%= employee.last_name %></td>
+          <td><%= employee.email %></td>
+          <td><%= employee.department %></td>
+          <td><%= employee.salary %></td>
+          <td><%= link_to 'Edit', edit_employee_path(employee), class: 'btn btn-primary' %></td>
+          <td><%= link_to 'Destroy', employee, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: 'btn btn-danger' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
